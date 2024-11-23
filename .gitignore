@@ -1,3 +1,5 @@
 app.dSYM
 dependencies/library
 app
+build
+CMakeFiles

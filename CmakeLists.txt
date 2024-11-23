@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 3.28)
+
+# プロジェクト名の設定
+project(my-engine)
+
+# 必須ライブラリの存在チェック
+find_package(glfw3 REQUIRED)
+
+# GLMのパスを手動で指定する
+find_path(GLM_INCLUDE_DIR glm/glm.hpp PATHS /opt/homebrew/include /opt/homebrew/Cellar/glm/1.0.1/include)
+
+# GLMが見つかった場合、インクルードディレクトリを追加
+if (GLM_INCLUDE_DIR)
+    include_directories(${GLM_INCLUDE_DIR})
+else()
+    message(FATAL_ERROR "GLM not found")
+endif()
+
+# include header files and link libraries
+include_directories(dependencies/include)
+link_directories(dependencies/library)
+add_library(glad STATIC dependencies/library/gl.c)
+
+# コンパイルオプション
+add_compile_options(-O2 -Wall)
+
+# 実行ファイルの指定
+add_executable(my-engine src/main.cpp)
+
+# 実行ファイルにリンクするライブラリの指定
+target_link_libraries(my-engine glad glfw ${CMAKE_DL_LIBS})
+
