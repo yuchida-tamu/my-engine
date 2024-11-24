@@ -5,6 +5,10 @@
 #include<glad/gl.h>
 #include<GLFW/glfw3.h>
 
+#ifndef SHADER_BASE_DIR
+#define SHADER_BASE_DIR "shaders"
+#endif
+
 void setUpGlfw(){
     glfwInit();
 
@@ -21,7 +25,7 @@ void setUpGlfw(){
 }
 
 char* readShaderFile (const char* filename){
-    std::filesystem::path filepath(filename);
+    std::filesystem::path filepath = std::filesystem::path(SHADER_BASE_DIR) / filename;
 
     if (!std::filesystem::exists(filepath)) {
         std::cerr << "File does not exist: " << filepath << std::endl;
@@ -74,12 +78,12 @@ int main(){
     unsigned int vertexShader, fragShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-    const char* vertexShaderSource = readShaderFile("../src/shaders/basic.vert");
+    const char* vertexShaderSource = readShaderFile("basic.vert");
     if (vertexShaderSource == NULL) {
         std::cerr << "Failed to read vertex shader file" << std::endl;
         return -1;
     }
-    const char* fragShaderSource = readShaderFile("../src/shaders/basic.frag");
+    const char* fragShaderSource = readShaderFile("basic.frag");
     if (fragShaderSource == NULL) {
         std::cerr << "Failed to read fragment shader file" << std::endl;
         return -1;
