@@ -45,6 +45,7 @@ int main(){
     shader.compile();
 
     Mesh* triangle = new Triangle2D();
+    triangle->create();
   
     glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
     glGetError();
