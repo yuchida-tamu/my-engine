@@ -33,9 +33,10 @@ add_compile_options(-O2 -Wall)
 
 # Collect all source files
 file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "src/*.h")
 
 # 実行ファイルの指定
-add_executable(my-engine ${SOURCES})
+add_executable(my-engine ${SOURCES} ${HEADERS})
 
 # 実行ファイルにリンクするライブラリの指定
 target_link_libraries(my-engine glad glfw ${CMAKE_DL_LIBS})
