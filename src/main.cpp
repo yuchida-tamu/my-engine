@@ -8,6 +8,7 @@
 #include "shader.h"
 #include "mesh/triangle.h"
 #include "mesh/mesh.h"
+#include "window/window.h"
 
 
 
@@ -28,44 +29,35 @@ void setUpGlfw(){
 
 int main(){
    
-    setUpGlfw();
-
-    GLFWwindow* window = glfwCreateWindow(800, 800, "My Engine", NULL, NULL);
-    if(window == NULL){
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
+    Window window(800, 800, "My Engine");
+    int success = window.init();
+    if(!success){
         return -1;
     }
-
-    glfwMakeContextCurrent(window);
-    gladLoadGL(glfwGetProcAddress);
-    glViewport(0, 0, 800, 800);
 
     Shader shader("basic.vert", "basic.frag");
     shader.compile();
 
     Mesh* triangle = new Triangle2D();
     triangle->create();
-  
-    glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
+
     glGetError();
    
-    while (!glfwWindowShouldClose(window))
+    while (!window.shouldClose())
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        window.clear();
 
         shader.use();
         triangle->draw();
 
-        glfwSwapBuffers(window);
+        window.swapBuffers();
         glfwPollEvents();
     }
 
     glDeleteProgram(shader.ID);
     triangle->destroy();
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
+    window.~Window(); 
 
     return 0;
 }
