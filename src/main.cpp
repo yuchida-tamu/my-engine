@@ -20,7 +20,6 @@ int main(){
         return -1;
     }
 
-
     Shader shader("basic.vert", "basic.frag");
     shader.compile();
 
