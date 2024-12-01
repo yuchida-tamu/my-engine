@@ -10,23 +10,6 @@
 #include "mesh/mesh.h"
 #include "window/window.h"
 
-
-
-void setUpGlfw(){
-    glfwInit();
-
-    // specifies glfw version
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-    // specifies glfw profile 
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-}
-
 int main(){
    
     Window window(800, 800, "My Engine");
