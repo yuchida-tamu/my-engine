@@ -4,7 +4,6 @@ class Triangle2D : public Mesh
 {
 public:
     Triangle2D() : Mesh(vertices, 9, indices, 3) {}
-    ~Triangle2D() {}
     void create() {
         Mesh::create();
     }

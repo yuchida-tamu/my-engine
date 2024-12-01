@@ -25,6 +25,7 @@ endif()
 
 # include header files and link libraries
 include_directories(dependencies/include)
+include_directories(dependencies/include/stb)
 link_directories(dependencies/library)
 add_library(glad STATIC src/gl.c)
 
