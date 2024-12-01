@@ -24,9 +24,6 @@ int main(){
     Shader shader("basic.vert", "basic.frag");
     shader.compile();
 
-    Mesh* triangle = new Triangle2D();
-    triangle->create();
-
     Mesh* plane = new Plane();
     plane->create();
     int width, height, nrChannels;
@@ -48,7 +45,6 @@ int main(){
         window.clear();
 
         shader.use();
-        // triangle->draw();
         plane->draw();
 
         window.swapBuffers();
@@ -56,7 +52,6 @@ int main(){
     }
 
     glDeleteProgram(shader.ID);
-    // triangle->destroy();
     plane->destroy();
 
     window.~Window(); 
