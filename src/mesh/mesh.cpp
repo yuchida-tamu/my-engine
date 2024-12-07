@@ -5,7 +5,8 @@ Mesh::Mesh(float* vertices, unsigned int vertexCount, unsigned int* indices, uns
     VAO = 0;
     VBO = 0;
     EBO = 0;
-    texture = 0;
+    texture1 = 0;
+    texture2 = 0;
     this->vertices = vertices;
     this->vertexCount = vertexCount;
     this->indices = indices;
@@ -41,9 +42,9 @@ void Mesh::create(){
     glBindVertexArray(0);
 }
 
-void Mesh::setTexture(unsigned char* data, int width, int height){
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+void Mesh::setPrimaryTexture(unsigned char* data, int width, int height){
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -55,8 +56,25 @@ void Mesh::setTexture(unsigned char* data, int width, int height){
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
+void Mesh::setSecondaryTexture(unsigned char* data, int width, int height){
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+}
+
 void Mesh::draw(){
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

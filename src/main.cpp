@@ -26,16 +26,28 @@ int main(){
     Mesh* plane = new Plane();
     plane->create();
     int width, height, nrChannels;
-    unsigned char* data = stbi_load("../assets/images/container.jpg", &width, &height, &nrChannels, 0);
-    if(data)
+    unsigned char* containerTexture = stbi_load("../assets/images/container.jpg", &width, &height, &nrChannels, 0);
+    if(containerTexture)
     {
-       plane->setTexture(data, width, height);
+       plane->setPrimaryTexture(containerTexture, width, height);
     }
     else
     {
         std::cerr << "Failed to load texture" << std::endl;
     }
-    stbi_image_free(data);
+
+    unsigned char* wallTexture = stbi_load("../assets/images/wall.jpg", &width, &height, &nrChannels, 0);
+
+    if(wallTexture)
+    {
+        plane->setSecondaryTexture(wallTexture, width, height);
+    }
+    else
+    {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+
+    stbi_image_free(containerTexture);
 
     glGetError();
    
@@ -44,6 +56,8 @@ int main(){
         window.clear();
 
         shader.use();
+        shader.setInt("texture1", 0);
+        shader.setInt("texture2", 1);
         plane->draw();
 
         window.swapBuffers();

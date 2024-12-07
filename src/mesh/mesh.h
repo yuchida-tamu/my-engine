@@ -11,9 +11,10 @@ public:
     void draw();
     void destroy();
     void create();
-    void setTexture(unsigned char* data, int width, int height);
+    void setPrimaryTexture(unsigned char* data, int width, int height);
+    void setSecondaryTexture(unsigned char* data, int width, int height);
 private:
-    unsigned int VAO, VBO, EBO, texture;
+    unsigned int VAO, VBO, EBO, texture1, texture2;
     float* vertices;
     unsigned int vertexCount;
     unsigned int* indices;
